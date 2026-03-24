@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="sk" class="h-full">
+<head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-H2HFXYE44G"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-H2HFXYE44G');
+  </script>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Lucia Danielová | Web Developer & Digitálny Manažér</title>
+  <meta name="description" content="Interaktívne portfólio Lucie Danielovej. Webový vývoj v čistom kóde, technické SEO a expertná správa digitálnych projektov.">
+  <meta name="keywords" content="Lucia Danielová, Web developer, SEO expert, Geodézia, HTML5, CSS3, JavaScript, PHP 8, Bratislava">
+  <meta name="author" content="Lucia Danielová">
+  <link rel="canonical" href="https://tepovaniekobercovkocur.sk/portfolio/">
+
+  <meta property="og:title" content="Lucia Danielová - Interaktívna Cesta Kariérou">
+  <meta property="og:description" content="Pozrite si moju cestu od geodézie až k webovému vývoju v tomto interaktívnom prostredí.">
+  <meta property="og:image" content="https://tepovaniekobercovkocur.sk/web/portfólio/podklad.png">
+  <meta property="og:url" content="https://tepovaniekobercovkocur.sk/portfolio/">
+  <meta property="og:type" content="website">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org/",
+    "@type": "Person",
+    "name": "Lucia Danielová",
+    "jobTitle": "Webový vývojár & Digitálny manažér",
+    "url": "https://tepovaniekobercovkocur.sk/portfolio/",
+    "sameAs": [
+      "https://github.com/luciadanielova"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Bratislava",
+      "addressCountry": "SK"
+    }
+  }
+  </script>
+
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Quicksand:wght@300;500;700&family=Fira+Code:wght@300;500&family=EB+Garamond:ital,wght@1,400&display=swap" rel="stylesheet">
+  
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body { height: 100%; width: 100%; overflow: hidden; background: #000; color: #fff; }
+    
+    .app-wrapper {
+      height: 100%; width: 100%; position: relative;
+      background-image: url('podklad.png');
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      display: flex; flex-direction: column;
+    }
+    
+    /* VRSTVA PRE ZRUČNOSTI (LISTY) */
+    .skills-flow-container { position: absolute; inset: 0; pointer-events: none; z-index: 5; }
+    .skill-leaf {
+      position: absolute; color: rgba(255, 255, 255, 0.75); white-space: nowrap;
+      text-shadow: 0 0 12px rgba(138, 180, 248, 0.6);
+      animation: float-leaf 6s ease-in-out infinite; opacity: 0.9;
+    }
+    @keyframes float-leaf {
+      0%, 100% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-15px) rotate(1.5deg); opacity: 1; }
+    }
+
+    /* CESTA A KAMENE */
+    .path-container { position: absolute; bottom: 0; left: 0; height: 100%; width: 100%; perspective: 1200px; z-index: 10; }
+    .stepping-stone {
+      position: absolute; border: none; cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      background-image: url('kamenbezpozadia.png');
+      background-size: contain; background-repeat: no-repeat; background-position: center;
+      background-color: transparent; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Cinzel', serif; color: rgba(255, 255, 255, 0.9);
+      transform-style: preserve-3d; font-weight: bold;
+    }
+    .stepping-stone:hover {
+      transform: translateX(-50%) translateY(-15px) rotateX(40deg) scale(1.18) !important;
+      filter: brightness(1.5) drop-shadow(0 0 20px rgba(255, 215, 0, 0.6));
+    }
+    .stone-label { font-size: 0.72rem; color: #ffd700; text-shadow: 0 0 8px rgba(0,0,0,1); text-align: center; line-height: 1.1; }
+
+    /* MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0, 0, 0, 0.92); backdrop-filter: blur(12px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: opacity 0.4s ease; z-index: 3000;
+    }
+    .modal-overlay.active { opacity: 1; pointer-events: all; }
+    .modal-content {
+      background: linear-gradient(145deg, #1e293b, #020617);
+      border: 1px solid rgba(138, 180, 248, 0.4); border-radius: 24px;
+      padding: 35px; width: 92%; max-width: 520px; color: white;
+      font-family: 'Quicksand', sans-serif; box-shadow: 0 30px 60px rgba(0,0,0,0.8);
+      transform: translateY(40px); transition: all 0.4s ease;
+      max-height: 80vh; overflow-y: auto;
+    }
+    .modal-overlay.active .modal-content { transform: translateY(0); }
+    .modal-header { font-family: 'Cinzel', serif; font-size: 1.6rem; color: #ffd700; margin-bottom: 8px; text-align: center; }
+    .modal-subheader { color: #8ab4f8; font-size: 0.85rem; text-align: center; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+    .section-title { font-weight: 700; color: #ffd700; margin-top: 20px; margin-bottom: 8px; font-size: 0.9rem; border-bottom: 1px solid rgba(255,215,0,0.3); text-transform: uppercase; }
+    .info-detail { font-size: 0.98rem; color: #f1f5f9; line-height: 1.5; }
+    .bullet-list { margin-top: 8px; padding-left: 20px; }
+    .bullet-list li { font-size: 0.9rem; color: #cbd5e1; margin-bottom: 6px; list-style-type: none; position: relative; }
+    .bullet-list li::before { content: "✦"; position: absolute; left: -20px; color: #ffd700; font-size: 0.7rem; top: 4px; }
+    .close-btn { display: block; width: 100%; margin-top: 30px; background: rgba(255,215,0,0.1); border: 1px solid #ffd700; color: #ffd700; padding: 12px; border-radius: 14px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+    .close-btn:hover { background: rgba(255,215,0,0.2); }
+
+    /* PÄTIČKA (FOOTER) */
+    footer {
+      position: absolute; bottom: 0; width: 100%; padding: 10px 20px;
+      background: rgba(0, 0, 0, 0.6); backdrop-filter: blur(5px);
+      z-index: 50; display: flex; justify-content: space-between; align-items: center;
+      font-family: 'Quicksand', sans-serif; font-size: 0.75rem; color: rgba(255,255,255,0.6);
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+    footer a { color: #8ab4f8; text-decoration: none; margin-left: 15px; }
+    footer a:hover { color: #ffd700; }
+
+    /* GDPR LIŠTA */
+    #gdpr-bar {
+      position: fixed; top: 0; width: 100%; background: #1e293b; color: #fff;
+      padding: 12px 20px; z-index: 5000; font-family: 'Quicksand', sans-serif;
+      font-size: 0.85rem; display: flex; justify-content: center; align-items: center;
+      gap: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+    }
+    #gdpr-bar button { background: #ffd700; color: #000; padding: 5px 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+  </style>
+</head>
+<body>
+
+  <div id="gdpr-bar">
+    <span>Tento web používa cookies na analýzu návštevnosti cez Google Analytics.</span>
+    <button onclick="acceptGDPR()">Súhlasím</button>
+  </div>
+
+  <div class="app-wrapper">
+    <div class="skills-flow-container" id="skillsFlow"></div>
+
+    <div class="path-container" id="pathContainer"></div>
+
+    <footer>
+      <div>© 2026 Lucia Danielová. Všetky práva vyhradené.</div>
+      <div>
+        <a href="https://tepovaniekobercovkocur.sk/privacy-policy.html">Súkromie</a>
+        <a href="https://github.com/luciadanielova" target="_blank">GitHub</a>
+        <a href="https://tepovaniekobercovkocur.sk" target="_blank">Projekt Kocúr</a>
+      </div>
+    </footer>
+
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal-content" id="modalContent"></div>
+    </div>
+  </div>
+
+  <script>
+    // --- GDPR LOGIKA ---
+    function acceptGDPR() {
+      document.getElementById('gdpr-bar').style.display = 'none';
+      localStorage.setItem('gdprAccepted', 'true');
+    }
+    if(localStorage.getItem('gdprAccepted')) document.getElementById('gdpr-bar').style.display = 'none';
+
+    // --- ZOZNAM VEDOMOSTÍ (LISTY) ---
+    const skillsList = [
+      { text: "HTML5 & CSS3 [Expert]", font: "'Fira Code'", size: "14px", top: 12, left: 45 },
+      { text: "PHP 8 [Mierne pokročilý]", font: "'Fira Code'", size: "12px", top: 16, left: 53 },
+      { text: "Vanilla JavaScript [Mierne pokročilý]", font: "'Fira Code'", size: "11px", top: 20, left: 49 },
+      { text: "Tailwind CSS [Mierne pokročilý]", font: "'Quicksand'", size: "12px", top: 24, left: 41 },
+      { text: "Microsoft Office 365 [Pokročilý]", font: "'Quicksand'", size: "13px", top: 8, left: 56 },
+      { text: "Kokeš [Mierne pokročilý]", font: "'EB Garamond'", size: "14px", top: 32, left: 58 },
+      { text: "MicroStation V8 [Základy]", font: "'EB Garamond'", size: "13px", top: 38, left: 62 },
+      { text: "Adobe Acrobat Pro [Pokročilý]", font: "'Quicksand'", size: "12px", top: 6, left: 66 },
+      { text: "Adobe Illustrator [Mierne pokročilý]", font: "'Quicksand'", size: "12px", top: 14, left: 74 },
+      { text: "Google Search Console [Expert]", font: "'Quicksand'", size: "13px", top: 52, left: 46 },
+      { text: "Technické SEO [Expert]", font: "'Quicksand'", size: "14px", top: 10, left: 50 },
+      { text: "Canva [Expert]", font: "'Cinzel'", size: "16px", top: 4, left: 72 },
+      { text: "AI [Expert]", font: "'Cinzel'", size: "19px", top: 2, left: 82 }
+    ];
+
+    function generateSkills() {
+      const container = document.getElementById('skillsFlow');
+      skillsList.forEach((skill, index) => {
+        const div = document.createElement('div');
+        div.className = 'skill-leaf';
+        div.innerText = skill.text;
+        div.style.fontFamily = skill.font;
+        div.style.fontSize = skill.size;
+        div.style.top = skill.top + '%';
+        div.style.left = skill.left + '%';
+        div.style.animationDelay = (index * 0.5) + 's';
+        container.appendChild(div);
+      });
+    }
+
+    // --- DÁTA KAMENOV ---
+    const stoneConfig = [
+      { id: 'dev',   label: 'WEB DEV<br>2024', size: 115, bottom: 6,  left: 78 },
+      { id: 'lab',   label: 'LABORANT<br>2024', size: 105, bottom: 14, left: 70 },
+      { id: 'geo2',  label: 'GEODET II<br>2021', size: 95, bottom: 21, left: 63 },
+      { id: 'maps',  label: 'GKÚ<br>2021',      size: 85, bottom: 28, left: 56 },
+      { id: 'it',    label: 'IT TECH<br>2017',  size: 75, bottom: 34, left: 50 },
+      { id: 'trade', label: 'TRADE<br>2016',    size: 65, bottom: 39, left: 44 },
+      { id: 'md',    label: 'MAMA<br>2013',     size: 58, bottom: 44, left: 39 },
+      { id: 'geo1',  label: 'GEODET I<br>2010', size: 50, bottom: 48, left: 34 },
+      { id: 'study', label: 'STUDY',            size: 42, bottom: 52, left: 30 },
+      { id: 'iam',   label: 'I AM',             size: 34, bottom: 55, left: 26 }
+    ];
+
+    const contentData = {
+      dev: `
+        <div class="modal-header">Webový vývojár</div>
+        <div class="modal-subheader">Freelance | 2024 - Dnes</div>
+        <div class="section-title">Backend & Security</div>
+        <ul class="bullet-list">
+          <li>Vývoj v PHP 8 (vlastné skripty), Honeypot ochrana.</li>
+          <li>Serverová správa: DNS, SSL, FTP (WebSupport, FileZilla).</li>
+        </ul>
+        <div class="section-title">UI/UX & SEO</div>
+        <ul class="bullet-list">
+          <li>HTML5, CSS3, JS bez CMS, Tailwind CSS (Mobile-first).</li>
+          <li>SEO expertíza: Google Search Console, JSON-LD schémy.</li>
+        </ul>
+      `,
+      lab: `
+        <div class="modal-header">Stavebný laborant</div>
+        <div class="modal-subheader">SQZ, s.r.o. | 2024</div>
+        <div class="info-detail">Odbery a certifikované skúšky betónu, zemín a asfaltu. Technická evidencia a odborné protokoly.</div>
+      `,
+      geo2: `
+        <div class="modal-header">Geodet v teréne</div>
+        <div class="modal-subheader">Geodetika, s.r.o. | 2021 - 2022</div>
+        <div class="info-detail">Adresné body, vytyčovanie, zameriavanie a tvorba geometrických plánov vo VGI formáte.</div>
+      `,
+      maps: `
+        <div class="modal-header">Digitalizácia máp</div>
+        <div class="modal-subheader">GKÚ Bratislava | 2021 - 2022</div>
+        <div class="info-detail">Spracovanie geodetických dát pre štátne mapové diela. Práca v Microstation Descartes.</div>
+      `,
+      it: `
+        <div class="modal-header">IT Technik</div>
+        <div class="modal-subheader">Ing. Gaal | 2017 - 2020</div>
+        <div class="info-detail">Správa firemných IS a OS Windows. Riešenie hardvérových a softvérových incidentov.</div>
+      `,
+      trade: `
+        <div class="modal-header">Trader Broker</div>
+        <div class="modal-subheader">ETX Capital | 2016 - 2018</div>
+        <div class="info-detail">Dealing na kapitálových trhoch, obchodné rokovania a telefonické zadávanie pokynov.</div>
+      `,
+      md: `
+        <div class="modal-header">Materská Dovolenka</div>
+        <div class="modal-subheader">MD | 2013 - 2017</div>
+        <div class="info-detail">Čas venovaný dcére Sophie a budovaniu základov pre ďalší rast.</div>
+      `,
+      geo1: `
+        <div class="modal-header">Geodet I</div>
+        <div class="modal-subheader">Geodetika s.r.o. | 2010 - 2012</div>
+        <div class="info-detail">Klasické terénne práce, vytyčovanie a komunikácia s klientmi v komerčnej sfére.</div>
+      `,
+      study: `
+        <div class="modal-header">Vzdelanie & Kurzy</div>
+        <div class="section-title">Odbor</div>
+        <div class="info-detail">SOŠ Geodetická Bratislava (2008 – 2012)</div>
+        <div class="section-title">Expertíza</div>
+        <div class="info-detail">Google: Základy digitálneho marketingu</div>
+        <div class="info-detail">AI & Canva (Expert), Responsive Web Design.</div>
+      `,
+      iam: `
+        <div class="modal-header">Lucia Danielová</div>
+        <div class="modal-subheader">Holíčska 11, Bratislava</div>
+        <div class="section-title">Kontakt</div>
+        <div class="info-detail">📞 0952 590 547</div>
+        <div class="info-detail">📧 <a href="mailto:luciadanielova1@gmail.com" style="color:#8ab4f8">luciadanielova1@gmail.com</a></div>
+        <div class="section-title">Projekty</div>
+        <div class="info-detail">🌐 <a href="https://tepovaniekobercovkocur.sk" target="_blank" style="color:#8ab4f8">tepovaniekobercovkocur.sk</a></div>
+      `
+    };
+
+    function generateStones() {
+      const container = document.getElementById('pathContainer');
+      stoneConfig.forEach((config, index) => {
+        const stone = document.createElement('button');
+        stone.className = 'stepping-stone';
+        stone.style.width = config.size + 'px';
+        stone.style.height = (config.size * 0.6) + 'px';
+        stone.style.bottom = config.bottom + '%';
+        stone.style.left = config.left + '%';
+        stone.style.transform = 'translateX(-50%) rotateX(55deg)';
+        stone.style.zIndex = 100 - index;
+        stone.innerHTML = `<span class="stone-label">${config.label}</span>`;
+        
+        stone.onclick = () => {
+          document.getElementById('modalContent').innerHTML = contentData[config.id] + '<button class="close-btn" onclick="closeModal()">Zavrieť</button>';
+          document.getElementById('modalOverlay').classList.add('active');
+          // Track click event in Analytics
+          gtag('event', 'click_stone', { 'stone_name': config.id });
+        };
+        container.appendChild(stone);
+      });
+    }
+
+    function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+    
+    // ŠTART
+    generateSkills();
+    generateStones();
+    
+    document.getElementById('modalOverlay').onclick = (e) => { 
+      if(e.target.id === 'modalOverlay') closeModal(); 
+    };
+  </script>
+</body>
+</html>
