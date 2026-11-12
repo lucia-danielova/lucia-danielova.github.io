@@ -1,572 +1,408 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lucia Danielová | Portfólio</title>
-    
-    <!-- Google Fonts: Elegantné pätkové Cormorant Garamond + čisté Plus Jakarta Sans -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lucia Danielová | Web Developer &amp; Digitálna Manažérka</title>
+<meta name="description" content="Lucia Danielová – freelance webová vývojárka a digitálna manažérka z Bratislavy. Tvorba webov v HTML5, CSS3, JavaScripte a PHP, technické SEO a správa online projektov.">
+<meta name="theme-color" content="#05070e">
 
-    <style>
-        :root {
-            --bg-image: url('podklad.png');
-            --gold-light: #fef3c7;
-            --gold-primary: #e2b86b;
-            --gold-border: rgba(226, 184, 107, 0.4);
-            --dark-bg: #05070e;
-            --text-light: #f8fafc;
-            --text-soft: rgba(248, 250, 252, 0.88);
-            --transition-speed: 0.35s;
-        }
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2305070e'/%3E%3Ctext x='50' y='64' font-size='46' font-family='Georgia,serif' font-style='italic' fill='%23e2b86b' text-anchor='middle'%3ELD%3C/text%3E%3C/svg%3E">
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-        body, html {
-            width: 100%;
-            height: 100%;
-            background-color: var(--dark-bg);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: var(--text-light);
-            overflow: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-
-        /* Minimalistický podpis v rohu (bez 1/9 a bez "klikaj na kamene") */
-        .site-header {
-            position: fixed;
-            top: 24px;
-            left: 32px;
-            z-index: 50;
-            pointer-events: none;
-        }
-
-        .site-header h1 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 32px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            color: #ffffff;
-            text-shadow: 0 4px 16px rgba(0, 0, 0, 0.85);
-        }
-
-        .site-header h1 span {
-            font-style: italic;
-            background: linear-gradient(135deg, #fffbeb 0%, #e2b86b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Hlavná scéna v pomere 16:9 s podklad.png */
-        .portfolio-stage {
-            position: relative;
-            width: 100vw;
-            height: 56.25vw;
-            max-width: 1920px;
-            max-height: 1080px;
-            background-image: var(--bg-image), url('podklad.jpg');
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            box-shadow: 0 0 90px rgba(0, 0, 0, 0.85);
-        }
-
-        /* Interaktívne kamene tvoriace chodník */
-        .stone-btn {
-            position: absolute;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: transparent;
-            border: none;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
-            cursor: pointer;
-            z-index: 10;
-            opacity: 0;
-            user-select: none;
-            outline: none;
-            transition: filter var(--transition-speed) ease;
-            filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.75));
-        }
-
-        /* Text na kameňoch */
-        .stone-btn span {
-            color: #ffffff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: clamp(8px, 0.72vw, 13px);
-            font-weight: 600;
-            text-transform: uppercase;
-            text-align: center;
-            letter-spacing: 1.6px;
-            text-shadow: 0 2px 8px rgba(0, 0, 0, 1), 0 0 12px rgba(0, 0, 0, 0.95);
-            pointer-events: none;
-            white-space: nowrap;
-            padding: 2px 6px;
-            transition: color 0.3s ease, text-shadow 0.3s ease;
-        }
-
-        .stone-btn:hover,
-        .stone-btn:focus-visible {
-            --scale: 1.14;
-            filter: drop-shadow(0 0 22px rgba(226, 184, 107, 0.85)) brightness(1.2);
-            z-index: 100;
-        }
-
-        .stone-btn:hover span,
-        .stone-btn:focus-visible span {
-            color: var(--gold-light);
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 1), 0 0 16px rgba(226, 184, 107, 0.9);
-        }
-
-        @keyframes floatEffect {
-            0% { transform: rotate(var(--rot)) scale(var(--scale, 1)) translateY(0px); }
-            50% { transform: rotate(var(--rot)) scale(var(--scale, 1)) translateY(-4px); }
-            100% { transform: rotate(var(--rot)) scale(var(--scale, 1)) translateY(0px); }
-        }
-
-        .is-floating {
-            animation: floatEffect 4.5s ease-in-out infinite;
-        }
-
-        @keyframes stoneAppear {
-            from { opacity: 0; transform: rotate(var(--rot)) scale(0.3); }
-            to { opacity: 1; transform: rotate(var(--rot)) scale(var(--scale, 1)); }
-        }
-
-        /* =========================================================
-           MALÉ VYSKAKOVACIE OKNO + ČISTÉ VIDITEĽNÉ POZADIE ZA NÍM
-           ========================================================= */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            /* Úplne priehľadné pozadie - ilustrácia za oknom zostáva krásne viditeľná */
-            background: transparent;
-            backdrop-filter: none;
-            -webkit-backdrop-filter: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.35s ease;
-            padding: 20px;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        /* Omnoho menšia, decentná sklenená kartička */
-        .modal-content {
-            position: relative;
-            background: linear-gradient(160deg, rgba(15, 22, 38, 0.76) 0%, rgba(8, 12, 22, 0.84) 100%);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid var(--gold-border);
-            border-radius: 22px;
-            padding: 26px 24px 22px;
-            max-width: 340px;
-            width: 100%;
-            text-align: center;
-            color: var(--text-light);
-            box-shadow: 
-                0 20px 45px rgba(0, 0, 0, 0.65),
-                0 0 30px rgba(226, 184, 107, 0.15),
-                inset 0 1px 0 rgba(255, 255, 255, 0.2);
-            transform: translateY(15px) scale(0.95);
-            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-
-        .modal-overlay.active .modal-content {
-            transform: translateY(0) scale(1);
-        }
-
-        /* Malé tlačidlo zatvorenia */
-        .close-modal {
-            position: absolute;
-            top: 12px;
-            right: 14px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--text-soft);
-            font-size: 16px;
-            line-height: 1;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.25s ease;
-        }
-
-        .close-modal:hover {
-            background: rgba(226, 184, 107, 0.2);
-            border-color: var(--gold-primary);
-            color: var(--gold-light);
-            transform: rotate(90deg);
-        }
-
-        /* Nadpis v okne */
-        .modal-body h2 {
-            font-family: 'Cormorant Garamond', serif;
-            font-size: 28px;
-            font-weight: 600;
-            font-style: italic;
-            letter-spacing: 0.4px;
-            line-height: 1.15;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, #ffffff 0%, #fef3c7 60%, #e2b86b 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Jemný oddeľovač */
-        .divider {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin: 0 auto 12px;
-            width: 90px;
-            color: var(--gold-primary);
-            font-size: 9px;
-            opacity: 0.8;
-        }
-
-        .divider::before,
-        .divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, var(--gold-primary), transparent);
-        }
-
-        /* Kompaktný popis */
-        .modal-body p {
-            font-size: 13.5px;
-            font-weight: 300;
-            line-height: 1.65;
-            color: var(--text-soft);
-            margin-bottom: 16px;
-        }
-
-        /* Malé elegantné štítky */
-        .modal-tags {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 6px;
-            margin-bottom: 16px;
-        }
-
-        .tag-badge {
-            font-size: 10.5px;
-            font-weight: 400;
-            letter-spacing: 0.4px;
-            padding: 4px 11px;
-            border-radius: 30px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(226, 184, 107, 0.3);
-            color: var(--gold-light);
-        }
-
-        /* Tlačidlo akcie */
-        .modal-action {
-            display: flex;
-            justify-content: center;
-        }
-
-        .action-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #090d16;
-            background: linear-gradient(135deg, #fef3c7 0%, #e2b86b 50%, #d49b35 100%);
-            padding: 9px 22px;
-            border-radius: 40px;
-            box-shadow: 0 6px 18px rgba(226, 184, 107, 0.25);
-            transition: all 0.25s ease;
-        }
-
-        .action-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 22px rgba(226, 184, 107, 0.4);
-        }
-
-        @media (max-width: 768px) {
-            .site-header { top: 12px; left: 16px; }
-            .site-header h1 { font-size: 22px; }
-            .modal-content { max-width: 290px; padding: 22px 18px 18px; }
-            .modal-body h2 { font-size: 24px; }
-            .modal-body p { font-size: 12.5px; }
-        }
-
-        @media (max-width: 600px) and (orientation: portrait) {
-            html, body {
-                height: auto;
-                min-height: 100%;
-                overflow-x: hidden;
-                overflow-y: auto;
-            }
-
-            body {
-                display: block;
-            }
-
-            .site-header { top: 10px; left: 14px; }
-            .site-header h1 { font-size: 20px; }
-
-            .portfolio-stage {
-                width: 100%;
-                height: max(1050px, 145svh);
-                max-width: none;
-                max-height: none;
-                margin-top: 54px;
-                background-size: cover;
-                background-position: 70% center;
-                box-shadow: none;
-            }
-
-            .stone-btn span {
-                font-size: clamp(8px, 2.4vw, 11px);
-                letter-spacing: 0.6px;
-                padding: 2px;
-                white-space: normal;
-            }
-
-            .modal-overlay { padding: 14px; }
-            .modal-content {
-                max-width: 360px;
-                max-height: calc(100dvh - 28px);
-                overflow-y: auto;
-            }
-        }
-    </style>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header class="site-header">
-        <h1>Lucia <span>Danielová</span></h1>
-    </header>
+<a class="skip-link" href="#main">Preskočiť na obsah</a>
 
-    <main class="portfolio-stage" id="stage" aria-label="Interaktívna mapa portfólia"></main>
+<header class="site-nav" id="site-nav">
+    <div class="nav-inner">
+        <a href="#hero" class="nav-logo">Lucia <span>Danielová</span></a>
 
-    <div id="modal-overlay" class="modal-overlay" aria-hidden="true">
-        <div class="modal-content" role="dialog" aria-modal="true" aria-labelledby="modal-title">
-            <button class="close-modal" id="close-btn" aria-label="Zavrieť okno">&times;</button>
-            <div class="modal-body">
-                <h2 id="modal-title">Názov sekcie</h2>
-                <div class="divider">✦</div>
-                <p id="modal-description">Tu sa zobrazí popis sekcie.</p>
-                <div id="modal-tags" class="modal-tags"></div>
-                <div id="modal-action" class="modal-action"></div>
+        <nav class="nav-links" id="nav-links">
+            <a href="#about" class="nav-link">O mne</a>
+            <a href="#skills" class="nav-link">Zručnosti</a>
+            <a href="#experience" class="nav-link">Prax</a>
+            <a href="#education" class="nav-link">Vzdelanie</a>
+            <a href="#projects" class="nav-link">Projekty</a>
+            <a href="#contact" class="nav-link nav-cta">Kontakt</a>
+        </nav>
+
+        <button class="nav-toggle" id="nav-toggle" aria-label="Otvoriť menu" aria-expanded="false" aria-controls="nav-links">
+            <span></span><span></span><span></span>
+        </button>
+    </div>
+</header>
+
+<main id="main">
+
+    <!-- HERO -->
+    <section class="hero" id="hero">
+        <div class="hero-bg" role="presentation"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-blob hero-blob--gold"></div>
+        <div class="hero-blob hero-blob--cyan"></div>
+
+        <div class="container hero-content reveal">
+            <p class="eyebrow">Freelance Web Developer &amp; Digitálna Manažérka</p>
+            <h1 class="hero-title">Lucia <span>Danielová</span></h1>
+            <p class="hero-text">
+                Navrhujem a programujem rýchle, bezpečné a prehľadné webové stránky od základu —
+                v čistom HTML5, CSS3 a JavaScripte, s vlastným PHP backendom a dôrazom na technické SEO.
+                Okrem kódu sa starám aj o celý digitálny chod projektu — hosting, doménu, e-mailing aj online prezentáciu.
+            </p>
+            <div class="hero-actions">
+                <a href="#contact" class="btn btn-primary">Spojme sa</a>
+                <a href="#projects" class="btn btn-outline">Moje projekty</a>
+            </div>
+            <div class="hero-socials">
+                <a href="mailto:luciadanielova1@gmail.com" class="social-pill" aria-label="E-mail">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13Zm2.2.3 7.3 5.7a1 1 0 0 0 1.2 0l7.3-5.7a.6.6 0 0 0-.4-1H4.6a.6.6 0 0 0-.4 1Z"/></svg>
+                    <span>luciadanielova1@gmail.com</span>
+                </a>
+                <a href="tel:+421952590547" class="social-pill" aria-label="Telefón">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.2c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8Z"/></svg>
+                    <span>+421 952 590 547</span>
+                </a>
+                <a href="https://github.com/lucia-danielova" target="_blank" rel="noopener noreferrer" class="social-pill" aria-label="GitHub">
+                    <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .26.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+                    <span>GitHub</span>
+                </a>
             </div>
         </div>
+
+        <a href="#about" class="scroll-cue" aria-label="Posunúť nižšie">
+            <span></span>
+        </a>
+    </section>
+
+    <!-- O MNE -->
+    <section class="section" id="about">
+        <div class="container">
+            <p class="section-eyebrow reveal">O mne</p>
+            <h2 class="section-title reveal">Cesta k webu, ktorú som si vybudovala sama</h2>
+
+            <div class="about-grid">
+                <div class="about-text reveal">
+                    <p>
+                        Volám sa Lucia a od januára 2024 pôsobím ako freelance <strong>webová vývojárka a digitálna manažérka</strong>.
+                        Weby staviam „na kolene" od úplného základu — bez CMS, v čistom HTML5, CSS3 a JavaScripte,
+                        s vlastnými PHP skriptami na spracovanie objednávok, ochranu formulárov (honeypot, rate limiting)
+                        a sanitizáciu vstupov. Okrem samotného kódu mám na starosti aj kompletnú správu projektu:
+                        doménu a DNS, hosting, SSL certifikáty, e-mail marketing, Google profil firmy aj technické SEO.
+                    </p>
+                    <p>
+                        K webu som sa nedostala klasickou cestou. Predtým som pracovala ako geodetka v teréne,
+                        digitalizovala mapy pre Geodetický a kartografický ústav Bratislava, niekoľko rokov som bola
+                        IT technička a správkyňa systémov, skúsila som si aj pozíciu trader brokera a popri tom
+                        aj rôzne brigády a prevádzkové pozície. Táto rôznorodá prax ma naučila rýchlo sa prispôsobiť,
+                        samostatne riešiť problémy a ísť si za výsledkom — presne to dnes zúročujem pri práci s klientmi
+                        a ich webovými projektmi.
+                    </p>
+                    <p>
+                        Zaujímam sa o novinky vo webových technológiách, kybernetickej bezpečnosti a automatizácii procesov
+                        a priebežne ich nasadzujem do vlastných projektov.
+                    </p>
+                </div>
+
+                <aside class="about-facts reveal">
+                    <ul class="facts-list">
+                        <li>
+                            <span class="facts-label">Lokalita</span>
+                            <span class="facts-value">Bratislava, Slovensko</span>
+                        </li>
+                        <li>
+                            <span class="facts-label">Rola</span>
+                            <span class="facts-value">Web Developer &amp; Digitálna Manažérka</span>
+                        </li>
+                        <li>
+                            <span class="facts-label">Dostupnosť</span>
+                            <span class="facts-value">Freelance / na diaľku</span>
+                        </li>
+                        <li>
+                            <span class="facts-label">Jazyky</span>
+                            <span class="facts-value">Slovenčina (C2), Angličtina (B1)</span>
+                        </li>
+                        <li>
+                            <span class="facts-label">Od roku</span>
+                            <span class="facts-value">2024 vo web developmente</span>
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- ZRUČNOSTI -->
+    <section class="section section-alt" id="skills">
+        <div class="container">
+            <p class="section-eyebrow reveal">Zručnosti</p>
+            <h2 class="section-title reveal">Čo všetko ovládam</h2>
+            <p class="section-lead reveal">Úroveň pri každej zručnosti vychádza z môjho reálneho pracovného nasadenia.</p>
+
+            <div class="skills-grid">
+
+                <div class="skill-card reveal">
+                    <h3>Web development</h3>
+                    <ul class="skill-list">
+                        <li><span class="skill-list-item"><span>HTML5 &amp; CSS3</span><span class="skill-level">Expert</span></span><span class="skill-bar"><span style="width:95%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Vanilla JavaScript</span><span class="skill-level">Mierne pokročilá</span></span><span class="skill-bar"><span style="width:60%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Tailwind CSS</span><span class="skill-level">Mierne pokročilá</span></span><span class="skill-bar"><span style="width:60%"></span></span></li>
+                        <li><span class="skill-list-item"><span>PHP 8</span><span class="skill-level">Mierne pokročilá</span></span><span class="skill-bar"><span style="width:60%"></span></span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-card reveal">
+                    <h3>Správa &amp; nasadenie</h3>
+                    <ul class="skill-list">
+                        <li><span class="skill-list-item"><span>DNS / Hosting (WebSupport)</span><span class="skill-level">Expert</span></span><span class="skill-bar"><span style="width:95%"></span></span></li>
+                        <li><span class="skill-list-item"><span>FTP / FileZilla</span><span class="skill-level">Expert</span></span><span class="skill-bar"><span style="width:95%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Windows OS správa</span><span class="skill-level">Expert</span></span><span class="skill-bar"><span style="width:95%"></span></span></li>
+                        <li><span class="skill-list-item"><span>SSL (Let's Encrypt)</span><span class="skill-level">Pokročilá</span></span><span class="skill-bar"><span style="width:78%"></span></span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-card reveal">
+                    <h3>SEO &amp; marketing</h3>
+                    <ul class="skill-list">
+                        <li><span class="skill-list-item"><span>Technické SEO</span><span class="skill-level">Expert</span></span><span class="skill-bar"><span style="width:95%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Google Search Console</span><span class="skill-level">Expert</span></span><span class="skill-bar"><span style="width:95%"></span></span></li>
+                        <li><span class="skill-list-item"><span>MailerLite e-mail marketing</span><span class="skill-level">Mierne pokročilá</span></span><span class="skill-bar"><span style="width:60%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Google Business profil</span><span class="skill-level">Pokročilá</span></span><span class="skill-bar"><span style="width:78%"></span></span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-card reveal">
+                    <h3>Dizajn &amp; grafika</h3>
+                    <ul class="skill-list">
+                        <li><span class="skill-list-item"><span>Canva</span><span class="skill-level">Expert</span></span><span class="skill-bar"><span style="width:95%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Adobe Illustrator</span><span class="skill-level">Mierne pokročilá</span></span><span class="skill-bar"><span style="width:60%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Adobe InDesign</span><span class="skill-level">Mierne pokročilá</span></span><span class="skill-bar"><span style="width:60%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Adobe Photoshop</span><span class="skill-level">Základy</span></span><span class="skill-bar"><span style="width:35%"></span></span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-card reveal">
+                    <h3>Kancelária &amp; dáta</h3>
+                    <ul class="skill-list">
+                        <li><span class="skill-list-item"><span>MS Office 365</span><span class="skill-level">Pokročilá</span></span><span class="skill-bar"><span style="width:78%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Adobe Acrobat Pro</span><span class="skill-level">Pokročilá</span></span><span class="skill-bar"><span style="width:78%"></span></span></li>
+                        <li><span class="skill-list-item"><span>Kokeš</span><span class="skill-level">Mierne pokročilá</span></span><span class="skill-bar"><span style="width:60%"></span></span></li>
+                        <li><span class="skill-list-item"><span>MicroStation V8</span><span class="skill-level">Základy</span></span><span class="skill-bar"><span style="width:35%"></span></span></li>
+                    </ul>
+                </div>
+
+                <div class="skill-card reveal">
+                    <h3>AI nástroje</h3>
+                    <ul class="skill-list">
+                        <li><span class="skill-list-item"><span>AI nástroje v praxi</span><span class="skill-level">Expert</span></span><span class="skill-bar"><span style="width:95%"></span></span></li>
+                    </ul>
+                    <p class="skill-note">Denne využívam AI nástroje na zrýchlenie vývoja, textov aj grafiky pri klientskych projektoch.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PRAX -->
+    <section class="section" id="experience">
+        <div class="container">
+            <p class="section-eyebrow reveal">Pracovné skúsenosti</p>
+            <h2 class="section-title reveal">Moja profesijná cesta</h2>
+
+            <ol class="timeline">
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">Jan 2024 – súčasnosť</span>
+                        <h3>Web Developer &amp; Digitálna Manažérka</h3>
+                        <p class="timeline-company">Freelance (vlastná činnosť)</p>
+                        <p>Tvorba komerčných webov od nuly v HTML5/CSS3/JavaScripte s vlastným PHP 8 backendom,
+                        Tailwind CSS pre mobile-first dizajn a JSON-LD štruktúrovanými dátami. Správa DNS a hostingu
+                        cez WebSupport, SSL certifikátov, FTP nasadenia, technického SEO cez Google Search Console,
+                        e-mail marketingu v MailerLite a firemného Google profilu.</p>
+                    </div>
+                </li>
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">Feb 2024 – Nov 2024</span>
+                        <h3>Stavebný laborant</h3>
+                        <p class="timeline-company">SQZ s.r.o.</p>
+                        <p>Práca popri rozbiehajúcom sa freelance podnikaní vo webovom vývoji.</p>
+                    </div>
+                </li>
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">Jan 2021 – Aug 2022</span>
+                        <h3>Geodet v teréne</h3>
+                        <p class="timeline-company">Geodetika s.r.o.</p>
+                        <p>Terénne geodetické zameriavania a spracovanie nameraných dát.</p>
+                    </div>
+                </li>
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">Jan 2021 – Jan 2022</span>
+                        <h3>Digitalizácia máp</h3>
+                        <p class="timeline-company">Geodetický a kartografický ústav Bratislava</p>
+                        <p>Digitalizácia a spracovanie katastrálnych máp.</p>
+                    </div>
+                </li>
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">Jan 2017 – Jan 2020</span>
+                        <h3>IT Technik &amp; Správca systémov</h3>
+                        <p class="timeline-company">Ing. Gaál</p>
+                        <p>Správa počítačových systémov a technická podpora používateľov.</p>
+                    </div>
+                </li>
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">Jan 2016 – Jún 2018</span>
+                        <h3>Trader broker</h3>
+                        <p class="timeline-company">Etx Capital</p>
+                        <p>Obchodovanie na finančných trhoch a práca s klientmi.</p>
+                    </div>
+                </li>
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">Jan 2013 – Jan 2017</span>
+                        <h3>Materská dovolenka</h3>
+                    </div>
+                </li>
+                <li class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="timeline-date">Jan 2010 – Sep 2012</span>
+                        <h3>Geodet</h3>
+                        <p class="timeline-company">Geodetika s.r.o., Bratislava I</p>
+                        <p>Zameriavanie a spracovanie geodetických podkladov.</p>
+                    </div>
+                </li>
+            </ol>
+
+            <p class="timeline-extra reveal">
+                Okrem toho mám skúsenosti aj z ďalších brigád a pozícií – ako opatrovateľka v senior centre,
+                pomocný personál v nemocnici, predavačka (TERNO, Malina s.r.o.) a krupierka/barmanka.
+                Táto prax ma naučila zodpovednosti, komunikácii s ľuďmi a spoľahlivosti,
+                ktoré uplatňujem aj dnes v práci s klientmi.
+            </p>
+        </div>
+    </section>
+
+    <!-- VZDELANIE -->
+    <section class="section section-alt" id="education">
+        <div class="container">
+            <p class="section-eyebrow reveal">Vzdelanie &amp; jazyky</p>
+            <h2 class="section-title reveal">Odkiaľ som vyštartovala</h2>
+
+            <div class="education-grid">
+                <div class="education-card reveal">
+                    <h3>Stredná odborná škola geodetická</h3>
+                    <p class="timeline-company">Vazovova 14, Bratislava</p>
+                    <p>Odbor geodézia, kartografia a kataster · 2008 – 2012</p>
+                </div>
+
+                <div class="languages-card reveal">
+                    <h3>Jazyky</h3>
+                    <div class="lang-row">
+                        <span>Slovenský jazyk</span>
+                        <span class="skill-level">Rodný jazyk · C2</span>
+                    </div>
+                    <span class="skill-bar"><span style="width:100%"></span></span>
+
+                    <div class="lang-row">
+                        <span>Anglický jazyk</span>
+                        <span class="skill-level">Mierne pokročilá · B1</span>
+                    </div>
+                    <span class="skill-bar"><span style="width:50%"></span></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJEKTY -->
+    <section class="section" id="projects">
+        <div class="container">
+            <p class="section-eyebrow reveal">Projekty</p>
+            <h2 class="section-title reveal">Na čom som pracovala</h2>
+
+            <div class="projects-grid">
+                <article class="project-card reveal">
+                    <div class="project-card-top">
+                        <span class="tag-badge">Klientský projekt</span>
+                    </div>
+                    <h3>KOCUR DETAILING</h3>
+                    <p>
+                        Kompletná komerčná webová stránka postavená od základu – čisté HTML5/CSS3/JavaScript,
+                        vlastný PHP 8 backend na spracovanie objednávok s honeypot ochranou a rate limitingom,
+                        mobile-first dizajn v Tailwind CSS, technické SEO a nastavenie DNS, hostingu aj e-mailu.
+                    </p>
+                    <div class="modal-tags">
+                        <span class="tag-badge">HTML5 / CSS3</span>
+                        <span class="tag-badge">PHP 8</span>
+                        <span class="tag-badge">Tailwind CSS</span>
+                        <span class="tag-badge">SEO</span>
+                    </div>
+                </article>
+
+                <article class="project-card project-card--placeholder reveal">
+                    <h3>Pripravujem ďalší projekt</h3>
+                    <p>Pracujem na nových ukážkach – čoskoro tu pribudnú ďalšie weby z mojej dielne.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- KONTAKT -->
+    <section class="section section-alt" id="contact">
+        <div class="container">
+            <p class="section-eyebrow reveal">Kontakt</p>
+            <h2 class="section-title reveal">Poďme spolu tvoriť váš web</h2>
+            <p class="section-lead reveal">Máte nápad na projekt, alebo hľadáte niekoho na správu vášho webu? Ozvite sa mi.</p>
+
+            <div class="contact-grid reveal">
+                <a href="mailto:luciadanielova1@gmail.com" class="contact-card">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M2 5.5A2.5 2.5 0 0 1 4.5 3h15A2.5 2.5 0 0 1 22 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-15A2.5 2.5 0 0 1 2 18.5v-13Zm2.2.3 7.3 5.7a1 1 0 0 0 1.2 0l7.3-5.7a.6.6 0 0 0-.4-1H4.6a.6.6 0 0 0-.4 1Z"/></svg>
+                    <span class="contact-label">E-mail</span>
+                    <span class="contact-value">luciadanielova1@gmail.com</span>
+                </a>
+                <a href="tel:+421952590547" class="contact-card">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1.1-.2 1.2.4 2.5.6 3.8.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.2c.6 0 1 .4 1 1 0 1.3.2 2.6.6 3.8.1.4 0 .8-.2 1.1L6.6 10.8Z"/></svg>
+                    <span class="contact-label">Telefón</span>
+                    <span class="contact-value">+421 952 590 547</span>
+                </a>
+                <a href="https://github.com/lucia-danielova" target="_blank" rel="noopener noreferrer" class="contact-card">
+                    <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2a10 10 0 0 0-3.16 19.49c.5.09.68-.22.68-.48v-1.7c-2.78.6-3.37-1.34-3.37-1.34-.46-1.16-1.11-1.47-1.11-1.47-.91-.62.07-.6.07-.6 1 .07 1.53 1.03 1.53 1.03.89 1.52 2.34 1.08 2.91.83.09-.65.35-1.08.63-1.33-2.22-.25-4.56-1.11-4.56-4.95 0-1.09.39-1.98 1.03-2.68-.1-.25-.45-1.27.1-2.65 0 0 .84-.27 2.75 1.02a9.5 9.5 0 0 1 5 0c1.91-1.3 2.75-1.02 2.75-1.02.55 1.38.2 2.4.1 2.65.64.7 1.03 1.59 1.03 2.68 0 3.85-2.34 4.7-4.57 4.94.36.31.68.92.68 1.85v2.75c0 .26.18.58.69.48A10 10 0 0 0 12 2Z"/></svg>
+                    <span class="contact-label">GitHub</span>
+                    <span class="contact-value">github.com/lucia-danielova</span>
+                </a>
+            </div>
+
+            <div class="contact-final reveal">
+                <a href="mailto:luciadanielova1@gmail.com" class="btn btn-primary">Napísať e-mail</a>
+            </div>
+        </div>
+    </section>
+
+</main>
+
+<footer class="site-footer">
+    <div class="container footer-inner">
+        <p>&copy; <span id="year"></span> Lucia Danielová. Vytvorené vlastnými silami.</p>
+        <a href="#hero" class="footer-top">Hore ↑</a>
     </div>
+</footer>
 
-    <script>
-        /* 
-           Kamene sú uložené tak, aby vytvárali chodník perspektívne za postavou 
-           po svietiacej ceste smerom k stromu a údoliu (od väčších vpredu po menšie vzadu).
-        */
-        const stoneConfig = [
-            { 
-                id: 'stone1', img: 'kamen.svg', label: 'O MNE', 
-                size: 155, bottom: 2, left: 82, rotate: -6,
-                title: 'O mne',
-                desc: 'Volám sa Lucia Danielová. Venujem sa tvorbe kreatívnych a funkčných webových riešení, kde spájam čistý kód s vlastným umeleckým dizajnom.',
-                tags: ['Web Developer', 'Kreatívny Dizajn', 'Zmysel pre detail']
-            },
-            { 
-                id: 'stone2', img: 'kamen.svg', label: 'ZRUČNOSTI', 
-                size: 142, bottom: 5, left: 71, rotate: -4,
-                title: 'Technické Zručnosti',
-                desc: 'Ovládam moderné webové technológie na tvorbu responzívnych a interaktívnych stránok, správu verzií cez Git a prácu vo VS Code.',
-                tags: ['HTML5', 'CSS3', 'JavaScript', 'VS Code', 'Git & GitHub']
-            },
-            { 
-                id: 'stone3', img: 'kamen.svg', label: 'PROJEKTY', 
-                size: 130, bottom: 8, left: 61, rotate: 2,
-                title: 'Moje Projekty',
-                desc: 'Ukážky mojej doterajšej práce: od interaktívnych JavaScript aplikácií až po toto plne animované autorské portfólio.',
-                tags: ['Interaktívne Portfólio', 'JS Aplikácie', 'Responzívne Weby'],
-                actionText: 'Môj GitHub', actionLink: 'https://github.com/lucia-danielova'
-            },
-            { 
-                id: 'stone4', img: 'kamen.svg', label: 'SKÚSENOSTI', 
-                size: 118, bottom: 12, left: 52, rotate: 6,
-                title: 'Skúsenosti & Prax',
-                desc: 'Praktické skúsenosti s návrhom architektúry webu od prvotnej grafickej skice v Illustratore až po nasadenie živého kódu.',
-                tags: ['Frontend', 'DevTools', 'Optimalizácia grafiky']
-            },
-            { 
-                id: 'stone5', img: 'kamen.svg', label: 'VZDELANIE', 
-                size: 108, bottom: 16, left: 43, rotate: 8,
-                title: 'Vzdelanie',
-                desc: 'Neustále sa vzdelávam v moderných webových technológiách, prístupnosti webu a najnovších trendoch v UI/UX dizajne.',
-                tags: ['Samoštúdium', 'Online Kurzy', 'Moderné CSS']
-            },
-            { 
-                id: 'stone6', img: 'kamen.svg', label: 'DIZAJN', 
-                size: 98, bottom: 19, left: 34, rotate: 4,
-                title: 'Grafický Dizajn',
-                desc: 'Vektorová grafika v Adobe Illustrator, tvorba vlastných vizuálnych prvkov, práca s vrstvami a príprava SVG a PNG podkladov.',
-                tags: ['Adobe Illustrator', 'SVG Grafika', 'Vizuálna Identita']
-            },
-            { 
-                id: 'stone7', img: 'kamen.svg', label: 'VÍZIA', 
-                size: 90, bottom: 17, left: 25, rotate: -5,
-                title: 'Záľuby & Vízia',
-                desc: 'Spájam technické myslenie s umením. Mojím cieľom je tvoriť weby, ktoré sú skutočným vizuálnym zážitkom pre používateľa.',
-                tags: ['Digitálne Umenie', 'Inovácie', 'Kreatívne Kódovanie']
-            },
-            { 
-                id: 'stone8', img: 'kamen.svg', label: 'CERTIFIKÁTY', 
-                size: 84, bottom: 14, left: 16, rotate: -10,
-                title: 'Certifikáty & Kurzy',
-                desc: 'Prehľad mojich absolvovaných kurzov, certifikácií a úspechov v oblasti frontend vývoja webu a grafického dizajnu.',
-                tags: ['Frontend Development', 'Responsive Design', 'UI/UX']
-            },
-            { 
-                id: 'stone9', img: 'kamen.svg', label: 'KONTAKT', 
-                size: 80, bottom: 11, left: 7, rotate: -14,
-                title: 'Kontaktuj ma',
-                desc: 'Máš záujem o spoluprácu, hľadáš posilu do tímu alebo máš otázku k mojim projektom? Ozvi sa mi!',
-                tags: ['Spolupráca', 'Web na mieru'],
-                actionText: 'Napísať e-mail', actionLink: 'mailto:luciadanielova1@gmail.com'
-            }
-        ];
-
-        const stage = document.getElementById('stage');
-        const modalOverlay = document.getElementById('modal-overlay');
-        const modalTitle = document.getElementById('modal-title');
-        const modalDesc = document.getElementById('modal-description');
-        const modalTags = document.getElementById('modal-tags');
-        const modalAction = document.getElementById('modal-action');
-        const closeBtn = document.getElementById('close-btn');
-
-        const stoneRatio = 1.5; 
-        const scaleMultiplier = 1.25;
-        const mobileLayoutQuery = window.matchMedia('(max-width: 600px) and (orientation: portrait)');
-        let mobileLayout = mobileLayoutQuery.matches;
-
-        function openModal(item) {
-            modalTitle.innerText = item.title || item.label;
-            modalDesc.innerText = item.desc || '';
-
-            modalTags.innerHTML = '';
-            if (item.tags && item.tags.length > 0) {
-                item.tags.forEach(tagText => {
-                    const span = document.createElement('span');
-                    span.className = 'tag-badge';
-                    span.innerText = tagText;
-                    modalTags.appendChild(span);
-                });
-            }
-
-            modalAction.innerHTML = '';
-            if (item.actionText && item.actionLink) {
-                const link = document.createElement('a');
-                link.className = 'action-btn';
-                link.href = item.actionLink;
-                if (item.actionLink.startsWith('http')) {
-                    link.target = '_blank';
-                    link.rel = 'noopener noreferrer';
-                }
-                link.innerText = item.actionText;
-                modalAction.appendChild(link);
-            }
-
-            modalOverlay.classList.add('active');
-            modalOverlay.setAttribute('aria-hidden', 'false');
-        }
-
-        function closeModal() {
-            modalOverlay.classList.remove('active');
-            modalOverlay.setAttribute('aria-hidden', 'true');
-        }
-
-        function buildPortfolio() {
-            stage.innerHTML = '';
-
-            stoneConfig.forEach((item, index) => {
-                const btn = document.createElement('button');
-                btn.type = 'button';
-                btn.className = 'stone-btn';
-                btn.id = item.id;
-                btn.setAttribute('aria-label', item.title || item.label);
-
-                const textSpan = document.createElement('span');
-                textSpan.innerText = item.label;
-                btn.appendChild(textSpan);
-
-                btn.style.backgroundImage = `url('${item.img}'), url('kamenbezpozadia.png')`;
-
-                if (mobileLayout) {
-                    btn.style.width = 'clamp(86px, 25vw, 112px)';
-                    btn.style.height = 'clamp(76px, 22vw, 98px)';
-                    btn.style.left = index % 2 === 0 ? '16%' : '58%';
-                    btn.style.top = `${10 + index * 9.4}%`;
-                } else {
-                    const wPx = item.size * scaleMultiplier;
-                    const hPx = wPx * stoneRatio;
-                    const wPercent = (wPx / 1920) * 100;
-                    const hPercent = (hPx / 1080) * 100;
-
-                    btn.style.width = `${wPercent}%`;
-                    btn.style.height = `${hPercent}%`;
-                    btn.style.left = `${item.left}%`;
-                    btn.style.bottom = `${item.bottom}%`;
-                }
-                
-                const divRotation = 90 + item.rotate;
-                btn.style.setProperty('--rot', `${divRotation}deg`);
-                
-                const spanRotation = -divRotation;
-                textSpan.style.transform = `rotate(${spanRotation}deg)`;
-
-                btn.style.animation = `stoneAppear 0.6s ease-out ${index * 0.08}s forwards`;
-
-                setTimeout(() => {
-                    btn.classList.add('is-floating');
-                }, (index * 80) + 600);
-
-                btn.addEventListener('click', () => {
-                    openModal(item);
-                });
-
-                stage.appendChild(btn);
-            });
-        }
-
-        closeBtn.addEventListener('click', closeModal);
-        window.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
-        window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
-        mobileLayoutQuery.addEventListener('change', (event) => {
-            mobileLayout = event.matches;
-            buildPortfolio();
-        });
-        window.addEventListener('DOMContentLoaded', buildPortfolio);
-    </script>
+<script src="script.js"></script>
 </body>
 </html>
