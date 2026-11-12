@@ -218,10 +218,9 @@ img { max-width: 100%; display: block; }
 .hero-bg {
     position: absolute;
     inset: 0;
-    background-image: linear-gradient(180deg, rgba(5,7,14,0.55) 0%, rgba(5,7,14,0.78) 55%, var(--bg-dark) 100%), url('podklad-hero.jpg');
-    background-size: cover;
-    background-position: center 35%;
-    filter: saturate(0.9);
+    background:
+        radial-gradient(ellipse at 75% 45%, rgba(226,184,107,0.10), transparent 60%),
+        linear-gradient(180deg, #0a0e1a 0%, var(--bg-dark) 100%);
 }
 .hero-overlay {
     position: absolute;
@@ -252,7 +251,25 @@ img { max-width: 100%; display: block; }
     50% { transform: translateY(-24px) scale(1.08); }
 }
 
-.hero-content { position: relative; z-index: 2; padding-top: 110px; }
+.hero-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 110px;
+    padding-bottom: 70px;
+    display: grid;
+    grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+    gap: 40px;
+    max-width: 1360px;
+    align-items: center;
+}
+.hero-art {
+    background: linear-gradient(160deg, #fffdf8 0%, #f3ead8 100%);
+    border-radius: var(--radius-lg);
+    padding: 10px 8px 4px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.55), 0 0 60px rgba(226,184,107,0.18);
+    border: 1px solid rgba(226,184,107,0.5);
+}
+.hero-art img { width: 100%; height: auto; mix-blend-mode: multiply; }
 .eyebrow {
     display: inline-block;
     font-size: 13px;
@@ -267,7 +284,7 @@ img { max-width: 100%; display: block; }
     margin-bottom: 22px;
 }
 .hero-title {
-    font-size: clamp(40px, 7vw, 76px);
+    font-size: clamp(40px, 5.2vw, 68px);
     font-weight: 600;
     color: #fff;
     margin-bottom: 20px;
@@ -646,6 +663,7 @@ img { max-width: 100%; display: block; }
 /* ---------- Responsive ---------- */
 @media (max-width: 900px) {
     .about-grid, .education-grid { grid-template-columns: 1fr; }
+    .hero-content { grid-template-columns: 1fr; gap: 36px; padding-bottom: 100px; }
 }
 
 @media (max-width: 760px) {
