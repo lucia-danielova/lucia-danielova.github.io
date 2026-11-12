@@ -25,6 +25,30 @@
         revealEls.forEach(function (el) { el.classList.add('in-view'); });
     }
 
+    // ---------- Animácia úrovní zručností ----------
+    var skillBars = document.querySelectorAll('.skill-bar > span');
+    if ('IntersectionObserver' in window && skillBars.length) {
+        var skillBarObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (!entry.isIntersecting) return;
+                var bar = entry.target;
+                var targetWidth = bar.dataset.target || bar.style.width || '0%';
+                bar.style.width = '0%';
+                requestAnimationFrame(function () {
+                    bar.style.width = targetWidth;
+                });
+                skillBarObserver.unobserve(bar);
+            });
+        }, { threshold: 0.45 });
+
+        skillBars.forEach(function (bar) {
+            var targetWidth = bar.style.width || '0%';
+            bar.dataset.target = targetWidth;
+            bar.style.width = '0%';
+            skillBarObserver.observe(bar);
+        });
+    }
+
     // ---------- Pozadie navigácie pri scrollovaní ----------
     var siteNav = document.getElementById('site-nav');
     function updateNavBackground() {
