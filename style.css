@@ -260,7 +260,10 @@ body.nav-open { overflow: hidden; }
 
 .spec { padding-top: 2.75rem; }
 
-.facts { border-top: 1px solid var(--ink); }
+.facts {
+    margin: 0;
+    border-top: 1px solid var(--ink);
+}
 
 .facts div {
     display: grid;
@@ -407,6 +410,10 @@ body.nav-open { overflow: hidden; }
 .block-title {
     font-size: clamp(1.7rem, 3vw, 2.15rem);
     margin-bottom: 0.75rem;
+}
+
+.skills-block .section-lead {
+    margin-top: 0;
 }
 
 .skill-group {

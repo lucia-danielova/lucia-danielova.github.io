@@ -24,7 +24,7 @@
             setMenu(!navLinks.classList.contains('open'));
         });
 
-        navLinks.querySelectorAll('a').forEach(function (link) {
+        siteNav.querySelectorAll('a').forEach(function (link) {
             link.addEventListener('click', function () {
                 setMenu(false);
             });
