@@ -1,100 +1,70 @@
 (function () {
     'use strict';
 
-    // ---------- Aktuálny rok v pätičke ----------
     var yearEl = document.getElementById('year');
     if (yearEl) {
-        yearEl.textContent = new Date().getFullYear();
+        yearEl.textContent = String(new Date().getFullYear());
     }
 
-    // ---------- Odhaľovanie obsahu pri scrollovaní ----------
-    var revealEls = document.querySelectorAll('.reveal');
-    if ('IntersectionObserver' in window && revealEls.length) {
-        var revealObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                    revealObserver.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
-
-        revealEls.forEach(function (el) { revealObserver.observe(el); });
-    } else {
-        // Fallback: prehliadač bez podpory IntersectionObserver zobrazí obsah hneď
-        revealEls.forEach(function (el) { el.classList.add('in-view'); });
-    }
-
-    // ---------- Animácia úrovní zručností ----------
-    var skillBars = document.querySelectorAll('.skill-bar > span');
-    if ('IntersectionObserver' in window && skillBars.length) {
-        var skillBarObserver = new IntersectionObserver(function (entries) {
-            entries.forEach(function (entry) {
-                if (!entry.isIntersecting) return;
-                var bar = entry.target;
-                var targetWidth = bar.dataset.target || bar.style.width || '0%';
-                bar.style.width = '0%';
-                requestAnimationFrame(function () {
-                    bar.style.width = targetWidth;
-                });
-                skillBarObserver.unobserve(bar);
-            });
-        }, { threshold: 0.45 });
-
-        skillBars.forEach(function (bar) {
-            var targetWidth = bar.style.width || '0%';
-            bar.dataset.target = targetWidth;
-            bar.style.width = '0%';
-            skillBarObserver.observe(bar);
-        });
-    }
-
-    // ---------- Pozadie navigácie pri scrollovaní ----------
     var siteNav = document.getElementById('site-nav');
-    function updateNavBackground() {
-        if (!siteNav) return;
-        siteNav.classList.toggle('scrolled', window.scrollY > 12);
-    }
-    updateNavBackground();
-    window.addEventListener('scroll', updateNavBackground, { passive: true });
-
-    // ---------- Mobilné menu ----------
     var navToggle = document.getElementById('nav-toggle');
     var navLinks = document.getElementById('nav-links');
 
-    function closeMobileMenu() {
+    function setMenu(open) {
         if (!navToggle || !navLinks) return;
-        navToggle.classList.remove('open');
-        navLinks.classList.remove('open');
-        navToggle.setAttribute('aria-expanded', 'false');
+        navToggle.classList.toggle('open', open);
+        navLinks.classList.toggle('open', open);
+        navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+        navToggle.setAttribute('aria-label', open ? 'Zavrieť menu' : 'Otvoriť menu');
+        document.body.classList.toggle('nav-open', open);
     }
 
-    if (navToggle && navLinks) {
+    if (navToggle && navLinks && siteNav) {
         navToggle.addEventListener('click', function () {
-            var isOpen = navLinks.classList.toggle('open');
-            navToggle.classList.toggle('open', isOpen);
-            navToggle.setAttribute('aria-expanded', String(isOpen));
+            setMenu(!navLinks.classList.contains('open'));
         });
 
-        navLinks.querySelectorAll('a').forEach(function (link) {
-            link.addEventListener('click', closeMobileMenu);
+        siteNav.querySelectorAll('a').forEach(function (link) {
+            link.addEventListener('click', function () {
+                setMenu(false);
+            });
+        });
+
+        document.addEventListener('keydown', function (event) {
+            if (event.key === 'Escape' && navLinks.classList.contains('open')) {
+                setMenu(false);
+                navToggle.focus();
+            }
+        });
+
+        document.addEventListener('click', function (event) {
+            if (!navLinks.classList.contains('open')) return;
+            if (siteNav.contains(event.target)) return;
+            setMenu(false);
+        });
+
+        window.addEventListener('resize', function () {
+            if (window.innerWidth > 860) setMenu(false);
         });
     }
 
-    // ---------- Zvýraznenie aktívnej položky menu ----------
     var sections = document.querySelectorAll('main section[id]');
-    var navAnchors = document.querySelectorAll('.nav-link');
+    var navAnchors = document.querySelectorAll('#nav-links a[href^="#"]');
 
     function updateActiveLink() {
         var current = '';
         sections.forEach(function (section) {
             var rect = section.getBoundingClientRect();
-            if (rect.top <= 120 && rect.bottom >= 120) {
+            if (rect.top <= 96 && rect.bottom >= 96) {
                 current = section.id;
             }
         });
         navAnchors.forEach(function (link) {
-            link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+            var id = (link.getAttribute('href') || '').slice(1);
+            var on = id === current;
+            link.classList.toggle('active', on);
+            if (on) link.setAttribute('aria-current', 'true');
+            else link.removeAttribute('aria-current');
         });
     }
 
